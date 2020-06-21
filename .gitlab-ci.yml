@@ -1,0 +1,78 @@
+image: node:latest
+
+stages:
+  - install
+  - build
+  - test
+
+variables:
+  MYSQL_DATABASE: $mysql_db
+  MYSQL_ROOT_PASSWORD: $mysql_root_pw
+
+cache:
+  paths:
+    - client/node_modules/
+    - server/node_modules/
+
+install_dependencies:
+  stage: install
+  cache:
+    paths:
+      - client/node_modules/
+      - server/node_modules/
+  script:
+    - npm run install-client
+    - npm run install-server
+
+build_client:
+  stage: build
+  script:
+    - npm run build-client
+  cache:
+    paths:
+      - client/node_modules/
+    policy: pull
+  artifacts:
+    paths:
+      - client/dist
+
+build_server:
+  stage: build
+  script:
+    - npm run build-server
+  cache:
+    paths:
+      - server/node_modules/
+    policy: pull
+  artifacts:
+    paths:
+      - server/build
+
+test_server:
+  services:
+    - name: mysql:latest
+      command: ["--default-authentication-plugin=mysql_native_password"]
+  stage: test
+  script:
+    - npm run test-server
+  needs:
+    - job: build_server
+      artifacts: false
+  cache:
+    paths:
+      - server/node_modules/
+    policy: pull
+  timeout: 30m
+
+test_client:
+  stage: test
+  script:
+    - npm run test-client
+  needs:
+    - job: build_client
+      artifacts: false
+  cache:
+    paths:
+      - client/node_modules/
+    policy: pull
+  timeout: 30m

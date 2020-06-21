@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "install-server": "(cd server && npm ci);",
+    "start-server": "npm run start --prefix server",
+    "build-server": "npm run build --prefix server",
+    "test-server": "npm run test --prefix server",
+    "install-client": "(cd client && npm ci);",
+    "start-client": "npm run serve --prefix client",
+    "build-client": "npm run build --prefix client",
+    "test-client": "npm run test:unit --prefix client"
+  },
+  "name": "web-portal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/issat-portal-team/web-portal.git",
+  "license": "MIT"
+}

@@ -1,0 +1,7 @@
+{
+  "files.trimTrailingWhitespace": true,
+  "eslint.workingDirectories": ["server", "client"],
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "eslint.alwaysShowStatus": true
+}

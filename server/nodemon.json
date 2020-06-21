@@ -1,0 +1,7 @@
+{
+    "ext": "ts js mjs json",
+    "ignore": [
+        "node_modules"
+    ],
+    "exec": "ts-node index.ts"
+}
